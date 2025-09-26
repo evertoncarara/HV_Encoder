@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="BitEncoder_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="BitEncoder_tb" />
+            <top_module name="util_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="795.984 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,134.001 ns"></ZoomEndTime>
+      <Cursor1Time time="1,100.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="141"></NameColumnWidth>
+      <ValueColumnWidth column_width="97"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject type="logic" fp_name="/BitEncoder_tb/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/BitEncoder_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/BitEncoder_tb/currentState">
+      <obj_property name="ElementShortName">currentState</obj_property>
+      <obj_property name="ObjectShortName">currentState</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/BitEncoder_tb/data_av">
+      <obj_property name="ElementShortName">data_av</obj_property>
+      <obj_property name="ObjectShortName">data_av</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/BIT_ENCODER/idx">
+      <obj_property name="ElementShortName">idx[15:0]</obj_property>
+      <obj_property name="ObjectShortName">idx[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/y">
+      <obj_property name="ElementShortName">y[5:0]</obj_property>
+      <obj_property name="ObjectShortName">y[5:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/x">
+      <obj_property name="ElementShortName">x[5:0]</obj_property>
+      <obj_property name="ObjectShortName">x[5:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/address">
+      <obj_property name="ElementShortName">address[9:0]</obj_property>
+      <obj_property name="ObjectShortName">address[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/data">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider68" type="divider">
+      <obj_property name="label">UUT</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/BIT_ENCODER/idx_f">
+      <obj_property name="ElementShortName">idx_f[15:0]</obj_property>
+      <obj_property name="ObjectShortName">idx_f[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/BIT_ENCODER/idx_x">
+      <obj_property name="ElementShortName">idx_x[15:0]</obj_property>
+      <obj_property name="ObjectShortName">idx_x[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/BIT_ENCODER/idx_y">
+      <obj_property name="ElementShortName">idx_y[15:0]</obj_property>
+      <obj_property name="ObjectShortName">idx_y[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/BitEncoder_tb/BIT_ENCODER/hv_bit_f">
+      <obj_property name="ElementShortName">hv_bit_f</obj_property>
+      <obj_property name="ObjectShortName">hv_bit_f</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/BitEncoder_tb/BIT_ENCODER/hv_bit_x">
+      <obj_property name="ElementShortName">hv_bit_x</obj_property>
+      <obj_property name="ObjectShortName">hv_bit_x</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/BitEncoder_tb/BIT_ENCODER/hv_bit_y">
+      <obj_property name="ElementShortName">hv_bit_y</obj_property>
+      <obj_property name="ObjectShortName">hv_bit_y</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/BitEncoder_tb/BIT_ENCODER/bind_fxy">
+      <obj_property name="ElementShortName">bind_fxy</obj_property>
+      <obj_property name="ObjectShortName">bind_fxy</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/BitEncoder_tb/BIT_ENCODER/count">
+      <obj_property name="ElementShortName">count</obj_property>
+      <obj_property name="ObjectShortName">count</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/BitEncoder_tb/SAMPLE/memoryArray">
+      <obj_property name="ElementShortName">memoryArray[0:1023][7:0]</obj_property>
+      <obj_property name="ObjectShortName">memoryArray[0:1023][7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>
