@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 09/24/2025 08:39:57 AM
+-- Create Date: 09/24/2025 08:39:57 A
 -- Design Name: 
 -- Module Name: BitEncoder_tb - Behavioral
 -- Project Name: 
