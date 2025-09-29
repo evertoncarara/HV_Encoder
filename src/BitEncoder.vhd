@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 09/22/2025 02:25:26 PM
+-- Create Date: 09/22/2025 02:25:26 M
 -- Design Name: 
 -- Module Name: BitEncoder - Behavioral
 -- Project Name: 
