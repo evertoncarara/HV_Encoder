@@ -38,10 +38,14 @@ architecture Behavioral of BitEncoder_tb is
     --    (x"05", x"06", x"07", x"08")
     --);
     
+    constant FEATURE_WIDTH  : integer := 8;
+    constant INDEX_WIDTH    : integer := 16; -- 16 olny for simulation. 14 is enough
+    
+    
     signal x, y: UNSIGNED(5 downto 0);
     
-    signal data : std_logic_vector(7 downto 0);
-    signal idx : UNSIGNED(15 downto 0);
+    
+    
     signal data_av : std_logic;
     
     type State is (S0, MEM_ADDR, S1, S2, S3);
@@ -49,7 +53,14 @@ architecture Behavioral of BitEncoder_tb is
     
     signal enc_rst: std_logic;
     
-    signal address: UNSIGNED(9 downto 0);
+    
+    -- Memories
+    signal samples_addr: UNSIGNED(9 downto 0);
+    signal feature : std_logic_vector(FEATURE_WIDTH - 1 downto 0);
+    
+    signal indexes_addr: UNSIGNED(10 downto 0);
+    signal idx : std_logic_vector(INDEX_WIDTH - 1 downto 0); 
+    
     
     constant MAX_Y : integer := 2;
     constant MAX_X : integer := 4;
@@ -61,24 +72,39 @@ begin
     SAMPLE: entity work.Memory(BlockRAM)
         generic map (
             imageFileName   => "image.txt",         
-            DATA_WIDTH      => 8,
+            DATA_WIDTH      => FEATURE_WIDTH,
             ADDR_WIDTH      => 10
         )
         port map (
             clock           => clk,
             wr              => '0',
             write_address   => (others=>'0'),
-            read_address    => STD_LOGIC_VECTOR(address),
+            read_address    => STD_LOGIC_VECTOR(samples_addr),
             data_i          => (others=>'0'),        
-            data_o          => data
+            data_o          => feature
+        );
+        
+    INDEXES: entity work.Memory(BlockRAM)
+        generic map (
+            imageFileName   => "indexes.txt",         
+            DATA_WIDTH      => INDEX_WIDTH,
+            ADDR_WIDTH      => 11
+        )
+        port map (
+            clock           => clk,
+            wr              => '0',
+            write_address   => (others=>'0'),
+            read_address    => STD_LOGIC_VECTOR(indexes_addr),
+            data_i          => (others=>'0'),        
+            data_o          => idx
         );
     
     BIT_ENCODER: entity work.BitEncoder 
         port map (
             clk     => clk,
             rst     => enc_rst,
-            idx     => STD_LOGIC_VECTOR(idx),
-            data    => data,
+            idx     => idx,
+            data    => feature,
             data_av => data_av,
             x       =>  STD_LOGIC_VECTOR(x),
             y       =>  STD_LOGIC_VECTOR(y)
@@ -96,24 +122,23 @@ begin
     begin
         if rst = '1' then
             
-            idx <= TO_UNSIGNED(0, idx'length);
             currentState <= S0;
         
         elsif rising_edge(clk) then
             case currentState is 
                 when S0 =>
-                    address <= (others=>'0');
+                    samples_addr <= (others=>'0');
                     x <= (others=>'0');
                     y <= (others=>'0');
                     currentState <= MEM_ADDR;
                     
                 when MEM_ADDR =>
-                    address <= address + 1;
+                    samples_addr <= samples_addr + 1;
                     currentState <= S1;
                     
                 when S1 =>           
-                    if address < SAMPLE_SIZE then
-                        address <= address + 1;
+                    if samples_addr < SAMPLE_SIZE then
+                        samples_addr <= samples_addr + 1;
                     else
                         currentState <= S2;
                     end if;
@@ -128,10 +153,10 @@ begin
                     end if;
                     
                 when S2 =>
-                    if idx = 4 then
+                    if indexes_addr = 4 then
                         currentState <= S3;
                     else
-                        idx <= idx + 1;
+                        indexes_addr <= indexes_addr + 1;
                         currentState <= S0;
                     end if;
                     
