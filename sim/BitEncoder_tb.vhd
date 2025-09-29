@@ -48,7 +48,7 @@ architecture Behavioral of BitEncoder_tb is
     
     signal data_av : std_logic;
     
-    type State is (S0, MEM_ADDR, S1, S2, S3);
+    type State is (RESET, INIT_SAMPLE_MEM_ADDR, SAMPLE_MEM_ADDR, SUM, NEXT_INDEX, STALL);
     signal currentState : State;
     
     signal enc_rst: std_logic;
@@ -62,9 +62,10 @@ architecture Behavioral of BitEncoder_tb is
     signal idx : std_logic_vector(INDEX_WIDTH - 1 downto 0); 
     
     
-    constant MAX_Y : integer := 2;
-    constant MAX_X : integer := 4;
-    constant SAMPLE_SIZE : integer := MAX_Y * MAX_X;
+    constant MAX_Y          : integer := 2;
+    constant MAX_X          : integer := 4;
+    constant SAMPLE_SIZE    : integer := MAX_Y * MAX_X;
+    constant TOTAL_INDEXES  : integer := 4;
     
     
 begin
@@ -114,33 +115,37 @@ begin
     clk <= not clk after 10 ns;
     rst <= '1', '0' after 15 ns;
    
-    enc_rst <= '1' when currentState = S0 else '0';
+    enc_rst <= '1' when currentState = INIT_SAMPLE_MEM_ADDR else '0';
     
-    data_av <= '1' when currentState = S1 else '0';
+    data_av <= '1' when currentState = SUM else '0';
         
     process(clk, rst)
     begin
         if rst = '1' then
             
-            currentState <= S0;
+            currentState <= RESET;
         
         elsif rising_edge(clk) then
             case currentState is 
-                when S0 =>
-                    samples_addr <= (others=>'0');
+                when RESET =>                    
+                    indexes_addr <= (others=>'0');                    
+                    currentState <= INIT_SAMPLE_MEM_ADDR;
+                    
+                when INIT_SAMPLE_MEM_ADDR =>
                     x <= (others=>'0');
                     y <= (others=>'0');
-                    currentState <= MEM_ADDR;
+                    samples_addr <= (others=>'0');
+                    currentState <= SAMPLE_MEM_ADDR;
                     
-                when MEM_ADDR =>
+                when SAMPLE_MEM_ADDR =>
                     samples_addr <= samples_addr + 1;
-                    currentState <= S1;
+                    currentState <= SUM;
                     
-                when S1 =>           
+                when SUM =>           
                     if samples_addr < SAMPLE_SIZE then
                         samples_addr <= samples_addr + 1;
                     else
-                        currentState <= S2;
+                        currentState <= NEXT_INDEX;
                     end if;
                     
                     if y < MAX_Y then
@@ -152,15 +157,15 @@ begin
                         end if; 
                     end if;
                     
-                when S2 =>
-                    if indexes_addr = 4 then
-                        currentState <= S3;
+                when NEXT_INDEX =>
+                    if indexes_addr = TOTAL_INDEXES then
+                        currentState <= STALL;
                     else
                         indexes_addr <= indexes_addr + 1;
-                        currentState <= S0;
+                        currentState <= INIT_SAMPLE_MEM_ADDR;
                     end if;
                     
-                when S3 =>
+                when STALL =>
                     
                 
             end case;
