@@ -43,12 +43,12 @@ end BitEncoder;
 architecture Behavioral of BitEncoder is
 
     signal hv_bit_f, hv_bit_x, hv_bit_y : std_logic;
-    signal bind_fxy : integer;
+    signal bind_fxy : std_logic;
     
     signal idx_f, idx_x, idx_y : SIGNED (15 downto 0);
     signal temp_idx_f, temp_idx_x, temp_idx_y : SIGNED (15 downto 0);
     
-    signal count: integer;
+    signal count: UNSIGNED(9 downto 0);
 
 begin
 
@@ -79,16 +79,16 @@ begin
         o   => hv_bit_y
     );
     
-    bind_fxy <= 1 when (hv_bit_f xor hv_bit_x xor hv_bit_y) = '1' else 0;    
+    bind_fxy <= hv_bit_f xor hv_bit_x xor hv_bit_y;    
     
     process(clk, rst)
     begin
         if rst = '1' then
-            count <= 0;
+            count <= (others=>'0');
             
         elsif rising_edge(clk) then
             if data_av = '1' then
-                count <= count + bind_fxy;
+                count <= count + unsigned'("" & bind_fxy);
             end if;          
         end if;
     end process;
