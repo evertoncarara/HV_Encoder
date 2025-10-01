@@ -62,8 +62,8 @@ architecture Behavioral of BitEncoder_tb is
     signal idx : std_logic_vector(INDEX_WIDTH - 1 downto 0); 
     
     
-    constant MAX_Y          : integer := 2;
-    constant MAX_X          : integer := 4;
+    constant MAX_Y          : integer := 28;
+    constant MAX_X          : integer := 28;
     constant SAMPLE_SIZE    : integer := MAX_Y * MAX_X;
     constant TOTAL_INDEXES  : integer := 4;
     

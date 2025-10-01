@@ -11,12 +11,12 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="588.442 ns"></ZoomEndTime>
-      <Cursor1Time time="880.000 ns"></Cursor1Time>
+      <ZoomStartTime time="70.154486 us"></ZoomStartTime>
+      <ZoomEndTime time="80.421103 us"></ZoomEndTime>
+      <Cursor1Time time="78.710000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="168"></NameColumnWidth>
+      <NameColumnWidth column_width="160"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="21" />
@@ -101,6 +101,7 @@
    <wvobject type="array" fp_name="/BitEncoder_tb/BIT_ENCODER/count">
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/BitEncoder_tb/SAMPLE/memoryArray">
       <obj_property name="DisplayName">label</obj_property>
