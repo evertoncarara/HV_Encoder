@@ -53,7 +53,7 @@ architecture Behavioral of BitEncoder is
 begin
 
     -- Emulate roll acording to 'data'
-    temp_idx_f <= SIGNED(idx) - SIGNED(data); 
+    temp_idx_f <= SIGNED(idx) - SIGNED('0' & data); 
     idx_f <= temp_idx_f when temp_idx_f >= 0 else temp_idx_f + TO_SIGNED(DIMENSIONS, temp_idx_f'length);
 
     BASE_HV_F: entity work.HVBits(arch1) port map(
