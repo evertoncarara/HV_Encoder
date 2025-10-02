@@ -1,71 +1,42 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 09/24/2025 08:39:57 A
--- Design Name: 
--- Module Name: BitEncoder_tb - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity BitEncoder_tb is
---  Port ( );
-end BitEncoder_tb;
+entity Encoder is
+    generic (
+        FEATURE_WIDTH   : integer := 8;
+        INDEX_WIDTH     : integer := 16; -- 16 olny for simulation. 14 is enough
+        TOTAL_INDEXES   : integer := 4;
+        MAX_X           : integer := 28;
+        MAX_Y           : integer := 28
+    );
+    port (
+        clk     : in std_logic;
+        rst     : in std_logic;
+        done    : out std_logic        
+    );
+end Encoder;
 
-architecture Behavioral of BitEncoder_tb is
-
-    signal clk : std_logic := '0';
-    signal rst: std_logic;
-    
-    --type sample is array (natural range<>, natural range<>) of std_logic_vector(7 downto 0);
-    --signal img: sample (0 to 1, 0 to 3):=( 
-    --    (x"01", x"02", x"03", x"04"),
-    --    (x"05", x"06", x"07", x"08")
-    --);
-    
-    constant FEATURE_WIDTH  : integer := 8;
-    constant INDEX_WIDTH    : integer := 16; -- 16 olny for simulation. 14 is enough
-    
-    
-    signal x, y: UNSIGNED(5 downto 0);
-    
-    
-    
-    signal data_av : std_logic;
+architecture Behavioral of Encoder is   
     
     type State is (RESET, INIT_SAMPLE_MEM_ADDR, SAMPLE_MEM_ADDR, SUM, NEXT_INDEX, STALL);
     signal currentState : State;
     
-    signal enc_rst: std_logic;
+    signal x, y: UNSIGNED(5 downto 0);
+    signal data_av : std_logic;
+            
+    signal bit_enc_rst: std_logic;
     
     
     -- Memories
-    signal samples_addr: UNSIGNED(9 downto 0);
-    signal feature : std_logic_vector(FEATURE_WIDTH - 1 downto 0);
+    signal samples_addr : UNSIGNED(9 downto 0);
+    signal feature      : std_logic_vector(FEATURE_WIDTH - 1 downto 0);
     
     signal indexes_addr: UNSIGNED(10 downto 0);
     signal idx : std_logic_vector(INDEX_WIDTH - 1 downto 0); 
     
     
-    constant MAX_Y          : integer := 28;
-    constant MAX_X          : integer := 28;
     constant SAMPLE_SIZE    : integer := MAX_Y * MAX_X;
-    constant TOTAL_INDEXES  : integer := 4;
     
     
 begin
@@ -103,21 +74,20 @@ begin
     BIT_ENCODER: entity work.BitEncoder 
         port map (
             clk     => clk,
-            rst     => enc_rst,
+            rst     => bit_enc_rst,
             idx     => idx,
             data    => feature,
             data_av => data_av,
             x       =>  STD_LOGIC_VECTOR(x),
             y       =>  STD_LOGIC_VECTOR(y)
-        
         );
     
-    clk <= not clk after 10 ns;
-    rst <= '1', '0' after 15 ns;
-   
-    enc_rst <= '1' when currentState = INIT_SAMPLE_MEM_ADDR else '0';
+ 
+    bit_enc_rst <= '1' when currentState = INIT_SAMPLE_MEM_ADDR else '0';
     
     data_av <= '1' when currentState = SUM else '0';
+    
+    done <= '1' when currentState = NEXT_INDEX else '0';
         
     process(clk, rst)
     begin
