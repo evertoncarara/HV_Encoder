@@ -13,6 +13,7 @@ entity Encoder is
     port (
         clk     : in std_logic;
         rst     : in std_logic;
+        b       : out std_logic;
         done    : out std_logic        
     );
 end Encoder;
@@ -72,6 +73,10 @@ begin
         );
     
     BIT_ENCODER: entity work.BitEncoder 
+        generic map (
+            DIMENSIONS  => 10000,
+            THRESHOLD   => SAMPLE_SIZE / 2
+        )
         port map (
             clk     => clk,
             rst     => bit_enc_rst,
@@ -79,7 +84,8 @@ begin
             data    => feature,
             data_av => data_av,
             x       =>  STD_LOGIC_VECTOR(x),
-            y       =>  STD_LOGIC_VECTOR(y)
+            y       =>  STD_LOGIC_VECTOR(y),
+            b       => b
         );
     
  

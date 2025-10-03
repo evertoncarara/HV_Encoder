@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="7.770001 us"></ZoomEndTime>
-      <Cursor1Time time="5,001.000000 us"></Cursor1Time>
+      <ZoomEndTime time="532.000001 us"></ZoomEndTime>
+      <Cursor1Time time="78.710000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="156"></NameColumnWidth>
+      <NameColumnWidth column_width="152"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="9" />
+   <WVObjectSize size="11" />
    <wvobject type="logic" fp_name="/Encoder_tb/UUT/rst">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
@@ -60,5 +60,13 @@
       <obj_property name="ElementShortName">count[9:0]</obj_property>
       <obj_property name="ObjectShortName">count[9:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Encoder_tb/UUT/b">
+      <obj_property name="ElementShortName">b</obj_property>
+      <obj_property name="ObjectShortName">b</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/Encoder_tb/UUT/done">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
    </wvobject>
 </wave_config>
