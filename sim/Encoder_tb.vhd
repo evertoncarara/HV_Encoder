@@ -28,8 +28,9 @@ end Encoder_tb;
 
 architecture Behavioral of Encoder_tb is
 
-    signal clk  : std_logic := '0';
-    signal rst  : std_logic;        
+    signal clk      : std_logic := '0';
+    signal rst      : std_logic;
+    signal start    : std_logic;        
       
 begin
 
@@ -40,13 +41,28 @@ begin
         generic map (
             FEATURE_WIDTH   => 8,
             INDEX_WIDTH     => 16, -- 16 olny for simulation. 14 is enough
-            TOTAL_INDEXES   => 4,
+            TOTAL_INDEXES   => 20,
             MAX_X           => 28,
             MAX_Y           => 28
         )
         port map (
             clk     => clk,
-            rst     => rst           
+            rst     => rst,
+            start   => start           
         );
+        
+    process
+    begin
+        start <= '0';
+        
+        wait until rising_edge(clk);
+        wait until rising_edge(clk);
+        start <= '1';
+        
+        wait until rising_edge(clk);
+        start <= '0';
+        
+        wait;
+    end process;
 
 end Behavioral;
