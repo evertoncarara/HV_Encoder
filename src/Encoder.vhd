@@ -13,14 +13,16 @@ entity Encoder is
     port (
         clk     : in std_logic;
         rst     : in std_logic;
+        start   : in std_logic;
         b       : out std_logic;
+        bit_av  : out std_logic;
         done    : out std_logic        
     );
 end Encoder;
 
 architecture Behavioral of Encoder is   
     
-    type State is (RESET, INIT_SAMPLE_MEM_ADDR, SAMPLE_MEM_ADDR, SUM, NEXT_INDEX, STALL);
+    type State is (RESET, INIT_SAMPLE_MEM_ADDR, SAMPLE_MEM_ADDR, SUM, NEXT_INDEX, FINISH);
     signal currentState : State;
     
     signal x, y: UNSIGNED(5 downto 0);
@@ -93,7 +95,9 @@ begin
     
     data_av <= '1' when currentState = SUM else '0';
     
-    done <= '1' when currentState = NEXT_INDEX else '0';
+    bit_av <= '1' when currentState = NEXT_INDEX else '0';
+    
+    done <= '1' when currentState = FINISH else '0';
         
     process(clk, rst)
     begin
@@ -105,7 +109,10 @@ begin
             case currentState is 
                 when RESET =>                    
                     indexes_addr <= (others=>'0');                    
-                    currentState <= INIT_SAMPLE_MEM_ADDR;
+                    
+                    if start = '1' then
+                        currentState <= INIT_SAMPLE_MEM_ADDR;
+                    end if;
                     
                 when INIT_SAMPLE_MEM_ADDR =>
                     x <= (others=>'0');
@@ -134,14 +141,15 @@ begin
                     end if;
                     
                 when NEXT_INDEX =>
-                    if indexes_addr = TOTAL_INDEXES then
-                        currentState <= STALL;
+                    if indexes_addr = TOTAL_INDEXES - 1 then
+                        currentState <= FINISH;
                     else
                         indexes_addr <= indexes_addr + 1;
                         currentState <= INIT_SAMPLE_MEM_ADDR;
                     end if;
                     
-                when STALL =>
+                when FINISH =>
+                    currentState <= RESET;
                     
                 
             end case;
